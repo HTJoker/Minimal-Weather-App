@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
 import 'package:weather_app/services/weather_service.dart';
+import 'package:weather_app/theme/theme.dart';
+import 'package:weather_app/theme/theme_provider.dart';
 
 import '../models/weather_model.dart';
 
@@ -62,12 +65,25 @@ class _WeatherPageState extends State<WeatherPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Text(
+              _weather?.cityName ?? "loading city...",
+              style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold, color: Colors.grey[700]),
+            ),
             Lottie.asset(getWeatherIcon(_weather?.mainCondition)),
-            Text(_weather?.cityName ?? "loading city..."),
-            Text(" Current Temp is ${_weather?.temperature.round()}°C"),
-            Text(_weather?.mainCondition ?? "loading condition..."),
+            Text(
+              "${_weather?.temperature.round()}°C",
+              style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold, color: Colors.grey[700]),
+            ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Provider.of<ThemeProvider>(context, listen: false).toggleTheme();
+        },
+        child: Provider.of<ThemeProvider>(context).currentTheme == lightMode
+            ? const Icon(Icons.nightlight_round_sharp)
+            : const Icon(Icons.wb_sunny),
       ),
     );
   }
