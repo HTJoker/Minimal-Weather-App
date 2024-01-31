@@ -36,6 +36,7 @@ class _WeatherPageState extends State<WeatherPage> {
     switch (mainCondition.toLowerCase()) {
       case "clouds":
       case "mist":
+        return "assets/mist.json";
       case "smoke":
       case "haze":
       case "dust":
@@ -48,7 +49,7 @@ class _WeatherPageState extends State<WeatherPage> {
       case "thinderstorm":
         return "assets/thunder.json";
       default:
-        return "assets/sunny.json";
+        return "assets/loading.json";
     }
   }
 
