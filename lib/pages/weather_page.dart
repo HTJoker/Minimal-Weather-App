@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:weather_app/services/weather_service.dart';
 
 import '../models/weather_model.dart';
@@ -26,6 +27,28 @@ class _WeatherPageState extends State<WeatherPage> {
     }
   }
 
+  String getWeatherIcon(String? mainCondition) {
+    if (mainCondition == null) return "assets/sunny.json";
+
+    switch (mainCondition.toLowerCase()) {
+      case "clouds":
+      case "mist":
+      case "smoke":
+      case "haze":
+      case "dust":
+      case "fog":
+        return "assets/cloudy.json";
+      case "rain":
+      case "drizzle":
+      case 'shower rain':
+        return "assets/rainy.json";
+      case "thinderstorm":
+        return "assets/thunder.json";
+      default:
+        return "assets/sunny.json";
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -39,11 +62,10 @@ class _WeatherPageState extends State<WeatherPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Lottie.asset(getWeatherIcon(_weather?.mainCondition)),
             Text(_weather?.cityName ?? "loading city..."),
             Text(" Current Temp is ${_weather?.temperature.round()}°C"),
             Text(_weather?.mainCondition ?? "loading condition..."),
-            Text("Feels Like ${_weather?.feelsLike.round()}°C"),
-            Text("Humidity is ${_weather?.humidity}%"),
           ],
         ),
       ),
